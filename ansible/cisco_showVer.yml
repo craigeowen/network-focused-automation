@@ -1,0 +1,19 @@
+---
+- hosts: 1.0.10.1
+  gather_facts: no
+  connection: local
+
+  tasks:
+  - name: show version
+    ios_facts:
+      gather_subset: hardware
+      host:
+      provider:
+        username: cisco
+        password: P4ssw0rd!
+        authorize: true
+        auth_pass: P4ssw0rd!
+
+  - name: print out the IOS version
+    debug:
+      var: ansible_net_version
