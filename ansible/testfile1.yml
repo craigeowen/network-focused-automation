@@ -1,5 +1,5 @@
 ---
-- hosts: #add host or group
+- hosts: test1 #add host or group
   gather_facts: no
   connection: local
 
