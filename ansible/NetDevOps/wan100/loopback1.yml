@@ -1,0 +1,34 @@
+  - name: show version
+    ios_facts:
+      gather_subset: hardware
+      
+  - name: print out the IOS version
+    debug:
+      var: ansible_net_version
+
+  - name: add loopback 1
+    ios_interface:
+      name: Loopback1
+      description: description of loopback1
+      state: present
+    
+  - name: configure loopback 1 ip address   
+    ios_l3_interface:
+      name: Loopback1
+      ipv4: 11.12.13.14/24
+
+  - name: add loopback 11
+    ios_interface:
+      name: Loopback11
+      description: "{{ lookup('csvfile', 'l11_description file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+      state: present
+    
+  - name: configure loopback 11 ip address   
+    ios_l3_interface:
+      name: Loopback11
+      ipv4: "{{ lookup('csvfile', 'l11_ipv4 file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+
+  - name: add interface to ospf
+    ios_config:
+      parents: "interface loopback 11"
+      lines: "{{ lookup('csvfile', 'l11_ospf_int file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"

@@ -1,0 +1,67 @@
+CE Router – CSR199,WAN100,
+hostname,wan100,
+l1_ipv4,10.1.1.1/32,Loopback 1
+l1_description,Mgmt,
+l11_ipv4,10.1.1.11/32,Loopback 11
+l11_description,OSPF Process 1,
+l11_ospf_int,ip ospf 1 area 0,
+l12_ipv4,,Loopback 12
+l12_description,,
+l12_ospf_int,,
+l13_ipv4,,Loopback 13
+l13_description,,
+l13_ospf_int,,
+l21_ipv4,10.1.1.21/32,Loopback 21
+l21_description,BGP,
+g1_ipv4,10.10.10.254/24,temp
+g1_description,Vlan100,
+g1_ospf_int,ip ospf 100 area 0,
+g1_vrf,ip vrf forwarding blue,
+g2_ipv4,123.123.123.254/24,10.10.10.254/24
+g2_description,Vlan123,Vlan100
+g2_ospf_int,ip ospf 123 area 0,ip ospf 1 area 0
+g2_vrf,ip vrf forwarding green,
+g3_ipv4,111.111.111.100/24,
+g3_description,vlan111,
+g3_ospf_int,ip ospf 1 area 0,
+g3_mpls,mpls ip,
+g4_ipv4,na,
+g4_description,na,
+g5_ipv4,10.99.99.100/24,
+g5_description,OOB,
+,,Routing
+OSPF-process-1,router ospf 1,OSPF Process 1
+ospf-rid-1,router-id 10.1.1.11,
+OSPF-process-100,router ospf 100,OSPF Process 100
+ospf-rid-100,router-id 10.1.1.12,
+OSPF-process-123,router ospf 123,OSPF Process 123
+ospf-rid-123,router-id 10.1.1.13,
+,,
+bgp-65000,router bgp 65000,BGP
+bgp-rid-65000,bgp router-id 10.1.1.21,
+bgp-neighbor-remote-as,neighbor 10.1.2.21 remote-as 65000,
+bgp-neighbor-update-source,neighbor 10.1.2.21 update-source loopback 21,
+,,
+bgp-add-fam-vpn4,address-family vpnv4,
+bgp-add-fam-vpn4-act,neighbor 10.1.2.21 activate,
+,,
+bgp-add-fam-vpn4-exit,exit-address-family,
+,,
+bgp-add-fam-vrf-1,address-family ipv4 vrf blue,
+bgp-add-fam-vrf1-redist-ospf100,redistribute ospf 100,
+bgp-add-fam-vrf1-exit,exit-address-family,
+,,
+bgp-add-fam-vrf-2,address-family ipv4 vrf green,
+bgp-add-fam-vrf2-redist-ospf123,redistribute ospf 123,
+bgp-add-fam-vrf2-exit,exit-address-family,
+,,
+,,
+vrf-1,ip vrf blue,
+vrf-1-rd,rd 65000:1,
+vrf-1-rt-e,route-target export 65000:1,
+vrf-1-rt-i,route-target import 65000:1,
+,,
+vrf-2,ip vrf green,
+vrf-2-rd,rd 65000:2,
+vrf-2-rt-e,route-target export 65000:2,
+vrf-2-rt-i,route-target import 65000:2,
