@@ -1,0 +1,144 @@
+###Start add Gig Interfaces###
+
+#GigabitEthernet1
+
+  - name: GigabitEthernet1 
+    ios_interface:
+      name: GigabitEthernet1
+      description: "{{ lookup('csvfile', 'g1_description file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+      enabled: True
+    
+  - name: add interface to vrf
+    ios_config:
+      parents: "interface GigabitEthernet1"
+      lines: "{{ lookup('csvfile', 'g1_vrf file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+
+  - name: configure GigabitEthernet1 ip address   
+    ios_l3_interface:
+      name: GigabitEthernet1
+      ipv4: "{{ lookup('csvfile', 'g1_ipv4 file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+
+  - name: add interface to ospf
+    ios_config:
+      parents: "interface GigabitEthernet1"
+      lines: "{{ lookup('csvfile', 'g1_ospf_int file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+
+
+#GigabitEthernet 2 
+
+  - name: GigabitEthernet2 
+    ios_interface:
+      name: GigabitEthernet2
+      description: "{{ lookup('csvfile', 'g2_description file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+      enabled: True
+    
+  - name: configure GigabitEthernet2 ip address   
+    ios_l3_interface:
+      name: GigabitEthernet2
+      ipv4: "{{ lookup('csvfile', 'g2_ipv4 file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+
+  - name: add interface to ospf
+    ios_config:
+      parents: "interface GigabitEthernet2"
+      lines: "{{ lookup('csvfile', 'g2_ospf_int file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+
+  - name: add interface to vrf
+    ios_config:
+      parents: "interface GigabitEthernet1"
+      lines: "{{ lookup('csvfile', 'g2_vrf file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+
+#GigabitEthernet3
+
+  - name: GigabitEthernet3 
+    ios_interface:
+      name: GigabitEthernet3
+      description: "{{ lookup('csvfile', 'g3_description file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+      enabled: True
+    
+  - name: configure GigabitEthernet3 ip address   
+    ios_l3_interface:
+      name: GigabitEthernet3
+      ipv4: "{{ lookup('csvfile', 'g3_ipv4 file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+
+  - name: add interface to ospf
+    ios_config:
+      parents: "interface GigabitEthernet3"
+      lines: "{{ lookup('csvfile', 'g3_ospf_int file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+
+  - name: add interface to mpls
+    ios_config:
+      parents: "interface GigabitEthernet1"
+      lines: "{{ lookup('csvfile', 'g3_mpls file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+
+#GigabitEthernet4
+#
+#  - name: GigabitEthernet4 
+#    ios_interface:
+#      name: GigabitEthernet4
+#      description: "{{ lookup('csvfile', 'g4_description file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+#      enabled: True
+#    
+#  - name: configure GigabitEthernet4 ip address   
+#    ios_l3_interface:
+#      name: GigabitEthernet4
+#      ipv4: "{{ lookup('csvfile', 'g4_ipv4 file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+#
+#GigabitEthernet5
+#
+  - name: GigabitEthernet5 
+    ios_interface:
+      name: GigabitEthernet5
+      description: "{{ lookup('csvfile', 'g5_description file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+      enabled: True
+    
+  - name: configure GigabitEthernet5 ip address   
+    ios_l3_interface:
+      name: GigabitEthernet5
+      ipv4: "{{ lookup('csvfile', 'g5_ipv4 file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+
+
+###End add Gig Interfaces###
+
+###Add Routing###
+
+###Start OSPF###
+
+#OSPF1
+  - name: osfp1
+    ios_config:
+      lines: "{{ lookup('csvfile', 'OSPF-process-1 file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+     
+  - name: ospf rid 1
+    ios_config:
+      parents: "router ospf 1"
+      lines:
+        - "{{ lookup('csvfile', 'ospf-rid-1 file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+#OSPF1
+
+#OSPF100
+  - name: osfp100
+    ios_config:
+      lines: "{{ lookup('csvfile', 'OSPF-process-100 file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+     
+  - name: ospf rid 100
+    ios_config:
+      parents: "router ospf 100"
+      lines:
+        - "{{ lookup('csvfile', 'ospf-rid-100 file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+#OSPF100
+
+#OSPF123
+  - name: osfp123
+    ios_config:
+      lines: "{{ lookup('csvfile', 'OSPF-process-123 file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+     
+  - name: ospf rid 123
+    ios_config:
+      parents: "router ospf 123"
+      lines: "{{ lookup('csvfile', 'ospf-rid-123 file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+#OSPF123
+ 
+###End OSPF###
+
+
+

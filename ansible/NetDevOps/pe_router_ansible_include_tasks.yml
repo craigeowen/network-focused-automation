@@ -1,0 +1,17 @@
+---
+- hosts: wan100
+  connection: network_cli
+  gather_facts: no
+
+  tasks:
+#first playbook task  
+    - include: mytasks1.yml
+#third playbook task
+    - include: mytasks4.yml
+#second playbook task
+    - include: mytasks2.yml
+#third playbook task
+    - include: mytasks3.yml
+
+
+

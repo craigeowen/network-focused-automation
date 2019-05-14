@@ -1,0 +1,25 @@
+---
+- hosts: wan100
+  connection: network_cli
+  gather_facts: no
+
+  tasks:
+###Add Interfaces###
+##Loopbacks##
+#loopback 1#
+    - include: loopback1.yml
+#
+#loopback11#
+    - include: loopback11.yml
+#
+#loopback 12#
+    - include: loopback12.yml
+#
+#loopback 13#
+    - include: loopback13.yml
+#
+#loopback 21#
+    - include: loopback21.yml
+#
+#
+###Add routing###

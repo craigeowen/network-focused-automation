@@ -1,0 +1,27 @@
+  - name: bgp 65000
+    ios_config:
+      lines: "{{ lookup('csvfile', 'bgp-65000 file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+     
+  - name: bgp 65000 RID and neighbour
+    ios_config:
+      parents: "router bgp 65000"
+      lines: 
+###RID###
+        - "{{ lookup('csvfile', 'bgp-rid-65000 file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+###Neighbour Remote AS###
+        - "{{ lookup('csvfile', 'bgp-neighbor-remote-as file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+###Neighbour Update Source###
+        - "{{ lookup('csvfile', 'bgp-neighbor-update-source file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+        
+
+
+
+
+
+
+
+
+
+
+   
+

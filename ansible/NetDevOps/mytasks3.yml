@@ -1,0 +1,36 @@
+  - name: vrf 1
+    ios_config:
+      lines: "{{ lookup('csvfile', 'vrf-1 file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+
+  - name: ip vrf 1
+    ios_config:
+      parents: "ip vrf blue"
+      lines: 
+###vrf rd###
+        - "{{ lookup('csvfile', 'vrf-1-rd file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+###
+###vrf rd###
+        - "{{ lookup('csvfile', 'vrf-1-rt-e file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+###
+###vrf rd###
+        - "{{ lookup('csvfile', 'vrf-1-rt-i file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+###
+
+  - name: vrf 2
+    ios_config:
+      lines: "{{ lookup('csvfile', 'vrf-2 file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+
+  - name: ip vrf 2
+    ios_config:
+      parents: "ip vrf green"
+      lines: 
+###vrf rd###
+        - "{{ lookup('csvfile', 'vrf-2-rd file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+###
+###vrf rd###
+        - "{{ lookup('csvfile', 'vrf-2-rt-e file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+###
+###vrf rd###
+        - "{{ lookup('csvfile', 'vrf-2-rt-i file=/etc/ansible/dev1/pb_dev/pe_router_config_load.csv delimiter=, col=1') }}"
+###
+
