@@ -1,0 +1,16 @@
+{
+  "topSystem": {
+    "children": [
+      {
+        "interfaceEntity": {
+          "children": [
+            {
+              "l1PhysIf": {
+                "attributes": {
+                  "trunkVlans": "16,26,36,46",
+                  "id": "eth1/6",
+                  "descr": "Test Trunk",
+                  "adminSt": "up",
+                  "mtu": "9216",
+                  "nativeVlan": "vlan-900"          
+}}}]}}]}}
