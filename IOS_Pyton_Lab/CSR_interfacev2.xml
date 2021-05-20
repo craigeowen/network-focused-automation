@@ -1,0 +1,16 @@
+<config>
+  <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+    <interface>
+      <name>{{ INTERFACE_INDEX }}</name>
+      <description>CConfig_Push_Duo</description>
+      <type xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+      <enabled>true</enabled>
+      <ipv4 xmlns="urn:ietf:params:xml:ns:yang:ietf-ip">
+        <address>
+          <ip>{{ IP_ADDRESS }}</ip>
+          <netmask>{{ SUBNET_MASK }}</netmask>
+        </address>
+      </ipv4>
+    </interface>
+  </interfaces>
+</config>
